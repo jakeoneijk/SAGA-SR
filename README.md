@@ -30,23 +30,6 @@ source install_torchjk.sh
 See the [TorchJaekwon README](https://github.com/jakeoneijk/TorchJaekwon) for
 more details.
 
-### Vendored code
-
-A trimmed subset of [Stable Audio Open's](https://github.com/Stability-AI/stable-audio-tools)
-`stable_audio_tools` package is vendored under `stable_audio_tools/` so it does
-not need to be installed separately. The vendored code has been reduced to only
-the conditioners this project uses (`T5Conditioner`, `NumberConditioner`,
-`MultiConditioner`) plus the minimal `NumberEmbedder` helper. Only one function
-is actually used by this code:
-
-```python
-from stable_audio_tools.models.conditioners import create_multi_conditioner_from_conditioning_config
-```
-
-It is called in `LatentSRTextFlow.__init__` to build the conditioner (T5 prompt
-encoder + numeric cutoff-ratio conditioners) from the `conditioning_config`
-block in the YAML config.
-
 ### Other dependencies
 
 In addition to TorchJaekwon, this code depends on (a pinned `requirements.txt`
@@ -57,9 +40,6 @@ is still TODO):
 - `einops`
 - `librosa`
 - `scipy`
-
-The vendored `stable_audio_tools` subset only relies on `torch`, `einops`, and
-`transformers` (all already listed above).
 
 ## Usage
 
