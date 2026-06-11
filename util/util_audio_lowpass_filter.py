@@ -1,7 +1,3 @@
-
-#from TorchJaekwon.Util.Util import Util
-#Util.set_sys_path_to_parent_dir(__file__, 2)
-
 from typing import Literal
 from numpy import ndarray
 

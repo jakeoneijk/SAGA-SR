@@ -46,8 +46,6 @@ class SRTextPreprocessor(Preprocessor):
             for _, value in meta_data_dict.items():
                 meta_data_list += value
 
-        #from random import shuffle
-        #shuffle(meta_data_list)
         meta_data_list = [meta_data for meta_data in meta_data_list if not os.path.exists(self.get_preprocessed_data_path(meta_data))]
         meta_data_list = [meta_data_list[i:i + self.batch_size] for i in range(0, len(meta_data_list), self.batch_size)]
         return meta_data_list
@@ -75,8 +73,6 @@ class SRTextPreprocessor(Preprocessor):
             response = response.lstrip()
             output_path = self.get_preprocessed_data_path(meta_data)
             util_data.pickle_save(output_path, response)
-            #util_audio.write(f'./artifacts/temp/{i:02}_{response}.wav', audios[i], sample_rate=16000)
-        #print('')
     
     def get_preprocessed_data_path(self, meta_data) -> str:
         return self.output_dir_path + meta_data['file_path'].split(self.data_config_name)[-1]

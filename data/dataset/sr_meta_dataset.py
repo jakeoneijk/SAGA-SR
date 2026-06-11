@@ -74,7 +74,6 @@ class SRMetaDataset(BalancedMultiDataset):
             if self.target_cutoff_ratio_threshold is not None:
                 for meta in tqdm(meta_list_of_data, desc=f'Sanity check [{data_set_name}]'):
                     audio_meta_data:dict = util_data.pickle_load(meta['file_path'])       
-                    #min_cutoff_ratio = self.output_cut_off_freq_range[1] / (self.sample_rate / 2)
                     if audio_meta_data['cutoff_ratio'] >= self.target_cutoff_ratio_threshold:
                         data_list_dict[self.dataset_type_map[data_set_name]].append({**meta, 'data_type': self.dataset_type_map[data_set_name]})
             else:
@@ -84,7 +83,6 @@ class SRMetaDataset(BalancedMultiDataset):
         return data_list_dict
 
     def read_data(self,meta_data):
-        #print(meta_data['file_path'])
         audio_meta_data:dict = util_data.pickle_load(meta_data['file_path'])
         original_sr = audio_meta_data['sample_rate']
         audio, sr = util_audio.read(
@@ -115,7 +113,6 @@ class SRMetaDataset(BalancedMultiDataset):
         input_cutoff_ratio = cutoff_freq / (self.sample_rate / 2)
         if self.calc_input_cutoff_ratio:
             input_cutoff_ratio = UtilAudioSR.get_cutoff_ratio(lr_audio)
-            #if input_cutoff_ratio == 0.0: print('')
         
         result_dict = {
             "audio": lr_audio, 
@@ -128,11 +125,5 @@ class SRMetaDataset(BalancedMultiDataset):
         if self.use_prompt:
             result_dict['prompt'] = util_data.pickle_load(meta_data['file_path'].replace(self.data_config_name, self.data_config_name + '_text'))
 
-        '''
-        from TorchJaekwon.Util import UtilTorch
-        debug1 = UtilAudioSR.get_cutoff_index_np(lr_audio[0], nfft=2048) / (2048 // 2 + 1)
-        debug2 = UtilAudioSR.get_cutoff_index_np(audio[0], nfft=2048) / (2048 // 2 + 1)'
-        util_audio.write(f"./{result_dict['prompt']}.wav", result_dict['target_audio'], 44100)
-        '''
         return result_dict
     

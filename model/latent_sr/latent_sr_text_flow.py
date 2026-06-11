@@ -196,9 +196,6 @@ if __name__ == "__main__":
     from torch_jaekwon.h_params import HParams
     from torch_jaekwon.get_module import GetModule as get_module
     from torch_jaekwon.util import util_data
-    #meta_list = util_data.walk('artifacts/data/preprocessed/audiosr/test_text_4000/ResampleTo48k/ESC50_fold5', '.pkl')
-    #for meta in meta_list:
-    #    print(util_data.pickle_load(meta['file_path']))
     config_path = 'config/saga_sr.yaml'
     
     HParams().set_config(config_path)
