@@ -1,6 +1,4 @@
-#Heavily influenced by https://github.com/facebookresearch/audiocraft/blob/main/audiocraft/modules/conditioners.py
-# Trimmed subset of stable_audio_tools/models/conditioners.py: only the
-# conditioners used by SAGA-SR (T5 prompt + numeric cutoff ratios) are kept.
+# Originally from stable_audio_tools (https://github.com/Stability-AI/stable-audio-tools)
 
 import torch
 import logging, warnings

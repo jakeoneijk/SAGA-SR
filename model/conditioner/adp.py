@@ -1,6 +1,4 @@
-# Minimal subset of stable_audio_tools/models/adp.py.
-# Only the pieces required by NumberConditioner (NumberEmbedder) are kept.
-# Original: https://github.com/Stability-AI/stable-audio-tools
+# Originally from stable_audio_tools (https://github.com/Stability-AI/stable-audio-tools)
 
 from math import pi
 from typing import List, Union

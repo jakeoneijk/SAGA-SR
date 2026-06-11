@@ -8,8 +8,6 @@ Inference/Output/*
 Ipynb/*
 .vscode/*
 wandb/*
-Model/StableAudioOpen/stable_audio_tools.egg-info/
 train/log*
 model/CKPT/
 artifacts/*
-model/StableAudioOpen/stable_audio_tools.egg-info/
