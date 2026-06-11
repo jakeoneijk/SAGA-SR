@@ -7,8 +7,8 @@ data:
     sample_rate: &sample_rate 44100
     segment_sec: &segment_sec 5.94430839002 #5.94430839002 #47.55446712018141
     mono: &mono False
-  train_data_path: &train_data_path /home/jakeoneijk/220101_data/audiosr/train/
-  test_data_path: &test_data_path '/home/jakeoneijk/220101_data/audiosr/test/ResampleTo48k'
+  train_data_path: &train_data_path 'artifacts/data/train'
+  test_data_path: &test_data_path 'artifacts/data/test'
   train_data_name_list: &train_data_name_list
     - 'Freesound48k'
     - 'MedleyDB-V1'
@@ -198,7 +198,7 @@ inference:
         12000: 'artifacts/data/preprocessed/audiosr/test_text/ResampleTo48k'
 #####################################################################################################
 evaluate:
-  eval_dir_path_gt: '/home/jakeoneijk/220101_data/audiosr/test/ResampleTo48k'
+  eval_dir_path_gt: 'artifacts/data/test'
   eval_dir_path_pred: 'artifacts/inference/250613_text_sr/250611_stable_audio_finetune(step20000)'
   class_meta:
     name: ['sr_evaluator', 'SREvaluator']

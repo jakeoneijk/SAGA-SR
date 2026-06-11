@@ -8,7 +8,7 @@ from util.util_audio_lowpass_filter import UtilAudioLowPassFilterNVSR
 class SRMetaDatasetEval(torch.utils.data.Dataset):
     def __init__(
         self,
-        root_data_dir:str = '/home/jakeoneijk/220101_data/audiosr/test/ResampleTo48k',
+        root_data_dir:str = 'artifacts/data/test',
         sample_rate:int = 48000,
         mono:bool = False,
         segment_sec:float = 10
