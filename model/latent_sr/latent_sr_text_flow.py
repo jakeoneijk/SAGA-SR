@@ -199,7 +199,7 @@ if __name__ == "__main__":
     #meta_list = util_data.walk('artifacts/data/preprocessed/audiosr/test_text_4000/ResampleTo48k/ESC50_fold5', '.pkl')
     #for meta in meta_list:
     #    print(util_data.pickle_load(meta['file_path']))
-    config_path = 'config/250613_text_sr/250822_prompt_sr.yaml'
+    config_path = 'config/saga_sr.yaml'
     
     HParams().set_config(config_path)
     model = get_module.get_module(class_type = 'model', module_name = HParams().model.class_meta['name'], arg_dict=HParams().model.class_meta['args'])

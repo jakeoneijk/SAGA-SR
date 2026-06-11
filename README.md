@@ -53,7 +53,7 @@ python main.py --stage STAGE_NAME
 Config files live under `config/`. The reference config is:
 
 ```
-config/250613_text_sr/250822_prompt_sr.yaml
+config/saga_sr.yaml
 ```
 
 ### Preprocess
