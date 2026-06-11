@@ -7,7 +7,7 @@ from torch import nn
 from torch.nn import functional as F
 from torch_jaekwon.model.diffusion.module.fourier_features import FourierFeatures
 
-from .ContinuousTransformer import ContinuousTransformer
+from .continuous_transformer import ContinuousTransformer
 
 class DIT(nn.Module):
     def __init__(

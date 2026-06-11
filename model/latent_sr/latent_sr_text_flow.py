@@ -10,7 +10,7 @@ from torch_jaekwon.model.flow_matching.flow_matching import FlowMatching
 from stable_audio_tools.models.conditioners import create_multi_conditioner_from_conditioning_config
 
 from util.util_audiosr import UtilAudioSR
-from model.latent_sr.AutoEncoder.autoencoder_pretransform import AutoencoderPretransform
+from model.latent_sr.autoencoder.autoencoder_pretransform import AutoencoderPretransform
 
 class LatentSRTextFlow(FlowMatching):
     def __init__(

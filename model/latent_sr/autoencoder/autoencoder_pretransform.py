@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from .AudioAutoencoder import AudioAutoencoder
+from .audio_autoencoder import AudioAutoencoder
 
 class Pretransform(nn.Module):
     def __init__(self, enable_grad, io_channels, is_discrete):

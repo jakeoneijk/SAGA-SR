@@ -2,7 +2,7 @@ import math
 import torch.nn as nn
 from torch.nn.utils import weight_norm
 
-from .Util import get_activation
+from .util import get_activation
 
 class OobleckEncoder(nn.Module):
     def __init__(

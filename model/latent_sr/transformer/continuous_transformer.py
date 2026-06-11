@@ -2,7 +2,7 @@ import torch
 from torch import nn
 from torch_jaekwon.util import util_torch
 
-from .TransformerModule import RotaryEmbedding, TransformerBlock
+from .transformer_module import RotaryEmbedding, TransformerBlock
 
 class ContinuousTransformer(nn.Module):
     def __init__(

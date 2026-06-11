@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 from ...CommonModule import LayerNorm
-from ..TransformerModule import Attention, FeedForward
+from ..transformer_module import Attention, FeedForward
 
 class TransformerBlock(nn.Module):
     def __init__(

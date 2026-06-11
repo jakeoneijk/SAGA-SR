@@ -80,7 +80,7 @@ dataloader:
       shuffle: False
       drop_last: True
     dataset_class_meta:
-      name: ['SRMetaDatasetEval', 'SRMetaDatasetEval']
+      name: ['sr_meta_dataset_eval', 'SRMetaDatasetEval']
       args: {'segment_sec': *segment_sec, sample_rate: *sample_rate, mono: *mono}
   #test:
   #  args:
