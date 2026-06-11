@@ -1,5 +1,3 @@
-from torch_jaekwon.util import util
-util.set_sys_path_to_parent_dir(__file__, 2)
 from typing import List, Optional, Tuple, Union
 from torch import Tensor
 
