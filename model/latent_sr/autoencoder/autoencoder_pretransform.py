@@ -96,25 +96,3 @@ class AutoencoderPretransform(Pretransform):
     
     def load_state_dict(self, state_dict, strict=True):
         self.model.load_state_dict(state_dict, strict=strict)
-
-if __name__ == '__main__':
-    from TorchJaekwon.Util import Util
-    from TorchJaekwon.Util import UtilAudio
-
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    auto_encoder = AutoencoderPretransform()
-    root_path:str = Util.get_ancestor_dir_path(__file__, 2)
-    ckpt_path:str = f'{root_path}/CKPT/autoencoder.pth'
-    ckpt = torch.load(ckpt_path, map_location='cpu')
-    auto_encoder.load_state_dict(ckpt)
-    auto_encoder.to(device)
-    
-    audio_path:str = f'{root_path}/Data/Dataset/MedleySolosDB/Medley-solos-DB_test-0_0a282672-c22c-59ff-faaa-ff9eb73fc8e6.wav'
-    audio, sr = UtilAudio.read(audio_path, mono=False)
-    audio = audio.unsqueeze(0)
-    audio = audio.to(device)
-    z = auto_encoder.encode(audio)
-    recon_audio = auto_encoder.decode(z)
-    UtilAudio.write(f'{root_path}/autoencoder_test_gt.wav', audio, 44100)
-    UtilAudio.write(f'{root_path}/autoencoder_test_recon.wav', recon_audio, 44100)
-    print('finish')

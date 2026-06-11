@@ -91,7 +91,6 @@ class ContinuousTransformer(nn.Module):
 
         # Iterate over the transformer layers
         for layer in self.layers:
-            #x = layer(x, rotary_pos_emb = rotary_pos_emb, global_cond=global_cond, **kwargs)
             x = util_torch.checkpoint(layer, x, rotary_pos_emb = rotary_pos_emb, global_cond=global_cond, **kwargs)
 
             if return_info:

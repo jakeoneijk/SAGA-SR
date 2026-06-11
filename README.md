@@ -2,17 +2,16 @@
 
 Text-conditioned latent flow-matching model for audio super-resolution.
 
+This is the implementation of [SAGA-SR](https://arxiv.org/abs/2509.24924).
+
 > ⚠️ **This code is under construction.** The repository currently contains the
-> preprocessing and training code only. APIs, configs, and file layout are
-> subject to change.
+> preprocessing and training code only, and may still contain errors.
 
 ## TODO
 
-- [ ] Finalize and publish `requirements.txt` (pinned dependency versions)
+- [ ] Update `requirements.txt`
 - [ ] Upload pretrained model weights
 - [ ] Add inference / evaluation code
-- [ ] Add usage examples and documentation
-
 ## Installation
 
 This project is built on top of [TorchJaekwon](https://github.com/jakeoneijk/TorchJaekwon),
@@ -27,43 +26,26 @@ cd TorchJaekwon
 source install_torchjk.sh
 ```
 
-See the [TorchJaekwon README](https://github.com/jakeoneijk/TorchJaekwon) for
-more details.
-
-### Other dependencies
-
-In addition to TorchJaekwon, this code depends on (a pinned `requirements.txt`
-is still TODO):
-
-- `transformers`
-- `ema_pytorch`
-- `einops`
-- `librosa`
-- `scipy`
-
 ## Usage
 
-The entry point follows the TorchJaekwon convention:
+The entry point follows the TorchJaekwon convention. Pass the config file with
+`--config_path` and the stage with `--stage`:
 
 ```bash
-python main.py --stage STAGE_NAME
+python main.py --config_path CONFIG_PATH --stage STAGE_NAME
 # STAGE choices: ['preprocess', 'train', 'inference', 'evaluate']
 ```
 
-Config files live under `config/`. The reference config is:
-
-```
-config/saga_sr.yaml
-```
+Config files live under `config/`. The reference config is `config/saga_sr.yaml`.
 
 ### Preprocess
 
 ```bash
-python main.py --stage preprocess
+python main.py --config_path config/saga_sr.yaml --stage preprocess
 ```
 
 ### Train
 
 ```bash
-python main.py --stage train
+python main.py --config_path config/saga_sr.yaml --stage train
 ```

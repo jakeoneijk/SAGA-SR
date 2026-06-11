@@ -1,15 +1,7 @@
-from typing import Literal, Union
-
-import os
-from copy import deepcopy   
 import torch
-
 from tqdm import tqdm
-import torch.nn.functional as F
-from ema_pytorch import EMA
 
 from torch_jaekwon.train.trainer.trainer import Trainer
-from torch_jaekwon.train.average_meter import AverageMeter
 from torch_jaekwon.util import util_audio, util_data, util_torch
 
 from util.util_audio_lowpass_filter import UtilAudioLowPassFilterNVSR
@@ -42,7 +34,7 @@ class FlowSRTrainer(Trainer):
         return loss, metric
     
     def log_media(self) -> None:
-        cutoff_freq = self.log_input_cutoff_freq #4000
+        cutoff_freq = self.log_input_cutoff_freq
         filter_name = "butter"
         filter_order =  4
         lowpass_filter = UtilAudioLowPassFilterNVSR()
@@ -57,7 +49,6 @@ class FlowSRTrainer(Trainer):
             pred_hr_audio = self.model.infer(
                 cond = {
                     'audio': torch.from_numpy(lr_audio).unsqueeze(0).float().to(self.device),
-                    #'input_cutoff_ratio': cutoff_freq / (self.model.sample_rate / 2),
                     'output_cutoff_ratio': self.log_media_output_cutoff_ratio
                 }
             )

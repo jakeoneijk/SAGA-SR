@@ -8,7 +8,7 @@ from train.trainer.flow_sr_trainer import FlowSRTrainer
 
 class FlowSRTextTrainer(FlowSRTrainer):
     def log_media(self) -> None:
-        cutoff_freq = self.log_input_cutoff_freq #4000
+        cutoff_freq = self.log_input_cutoff_freq
         filter_name = "butter"
         filter_order =  4
         lowpass_filter = UtilAudioLowPassFilterNVSR()

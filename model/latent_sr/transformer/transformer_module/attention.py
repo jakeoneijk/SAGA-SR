@@ -294,11 +294,6 @@ class Attention(nn.Module):
         out = rearrange(out, ' b h n d -> b n (h d)')
 
         # Communicate between heads
-        
-        # with autocast(enabled = False):
-        #     out_dtype = out.dtype
-        #     out = out.to(torch.float32)
-        #     out = self.to_out(out).to(out_dtype)
         out = self.to_out(out)
 
         if mask is not None:

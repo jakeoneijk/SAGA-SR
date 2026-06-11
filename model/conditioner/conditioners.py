@@ -106,8 +106,6 @@ class T5Conditioner(Conditioner):
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             try:
-                # self.tokenizer = T5Tokenizer.from_pretrained(t5_model_name, model_max_length = max_length)
-                # model = T5EncoderModel.from_pretrained(t5_model_name, max_length=max_length).train(enable_grad).requires_grad_(enable_grad)
                 self.tokenizer = AutoTokenizer.from_pretrained(t5_model_name)
                 model = T5EncoderModel.from_pretrained(t5_model_name).train(enable_grad).requires_grad_(enable_grad).to(torch.float16)
             finally:

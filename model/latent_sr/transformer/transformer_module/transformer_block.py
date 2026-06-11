@@ -63,7 +63,6 @@ class TransformerBlock(nn.Module):
             )
 
             nn.init.zeros_(self.to_scale_shift_gate[1].weight)
-            #nn.init.zeros_(self.to_scale_shift_gate_self[1].bias)
 
     def forward(
         self,

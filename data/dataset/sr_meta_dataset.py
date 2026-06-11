@@ -3,7 +3,6 @@ from tqdm import tqdm
 
 import os
 import random
-import numpy as np
 
 from torch_jaekwon.util import util_data, util_audio, util
 from torch_jaekwon.data.dataset.balanced_multi_dataset import BalancedMultiDataset
