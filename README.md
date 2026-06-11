@@ -1,7 +1,5 @@
 # SAGA-SR
 
-Text-conditioned latent flow-matching model for audio super-resolution.
-
 This is the implementation of [SAGA-SR](https://arxiv.org/abs/2509.24924).
 
 > ⚠️ **This code is under construction.** The repository currently contains the
