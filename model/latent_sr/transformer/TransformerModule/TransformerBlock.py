@@ -6,19 +6,19 @@ from ..TransformerModule import Attention, FeedForward
 
 class TransformerBlock(nn.Module):
     def __init__(
-            self,
-            dim,
-            dim_heads = 64,
-            cross_attend = False,
-            dim_context = None,
-            global_cond_dim = None,
-            causal = False,
-            zero_init_branch_outputs = True,
-            layer_ix = -1,
-            remove_norms = False,
-            attn_kwargs = {},
-            ff_kwargs = {},
-            norm_kwargs = {}
+        self,
+        dim,
+        dim_heads = 64,
+        cross_attend = False,
+        dim_context = None,
+        global_cond_dim = None,
+        causal = False,
+        zero_init_branch_outputs = True,
+        layer_ix = -1,
+        remove_norms = False,
+        attn_kwargs = {},
+        ff_kwargs = {},
+        norm_kwargs = {}
     ):
         
         super().__init__()

@@ -11,14 +11,15 @@ from scipy.signal import butter, cheby1, cheby2, ellip, bessel, sosfiltfilt, res
 class UtilAudioLowPassFilterNVSR:
     # this code is refactored version of https://github.com/haoheliu/ssr_eval
 
-    def lowpass(self, 
-                audio:ndarray, #[time] 1d array
-                sr:int,
-                filter_name:Literal["cheby","butter","bessel","ellip"],
-                filter_order:int,
-                cutoff_freq:int,
-                upsample_to_original:bool = True   
-                ):
+    def lowpass(
+        self,
+        audio:ndarray, #[time] 1d array
+        sr:int,
+        filter_name:Literal["cheby","butter","bessel","ellip"],
+        filter_order:int,
+        cutoff_freq:int,
+        upsample_to_original:bool = True
+    ):
         assert len(audio.shape) == 1 or (len(audio.shape) == 2 and (audio.shape[0] == 1 or audio.shape[0] == 2))
         if filter_name == "cheby": filter_name = "cheby1"
         assert filter_order >= 2 and filter_order <= 10, f"filter_order should be between 2 and 10, but {filter_order} is given"
@@ -36,13 +37,14 @@ class UtilAudioLowPassFilterNVSR:
 
     
     @staticmethod
-    def lowpass_filter(x:ndarray, #[time] 1d array
-                       highcutoff_freq:float, #high cutoff frequency
-                       fs:int, 
-                       order:int, #the order of filter
-                       ftype:Literal['butter', 'cheby1', 'cheby2', 'ellip', 'bessel'],
-                       upsample_to_original:bool = True
-                       ) -> ndarray: #[time] 1d array
+    def lowpass_filter(
+        x:ndarray, #[time] 1d array
+        highcutoff_freq:float, #high cutoff frequency
+        fs:int,
+        order:int, #the order of filter
+        ftype:Literal['butter', 'cheby1', 'cheby2', 'ellip', 'bessel'],
+        upsample_to_original:bool = True
+    ) -> ndarray: #[time] 1d array
         nyq = 0.5 * fs
         hi = highcutoff_freq / nyq
         if ftype == "butter":

@@ -10,8 +10,9 @@ from torch_jaekwon.model.diffusion.module.fourier_features import FourierFeature
 from .ContinuousTransformer import ContinuousTransformer
 
 class DIT(nn.Module):
-    def __init__(self, 
-        io_channels=64, 
+    def __init__(
+        self,
+        io_channels=64,
         patch_size=1,
         embed_dim=384,
         cond_token_dim=0,
@@ -23,7 +24,8 @@ class DIT(nn.Module):
         depth=12,
         num_heads=6,
         global_cond_type: tp.Literal["prepend", "adaLN"] = "prepend",
-        **kwargs):
+        **kwargs
+    ):
 
         super().__init__()
         
@@ -103,9 +105,9 @@ class DIT(nn.Module):
         nn.init.zeros_(self.postprocess_conv.weight)
 
     def _forward(
-        self, 
-        x, 
-        t, 
+        self,
+        x,
+        t,
         mask=None,
         cross_attn_cond=None,
         cross_attn_cond_mask=None,
@@ -114,7 +116,8 @@ class DIT(nn.Module):
         prepend_cond=None,
         prepend_cond_mask=None,
         return_info=False,
-        **kwargs):
+        **kwargs
+    ):
 
         if cross_attn_cond is not None:
             cross_attn_cond = self.to_cond_embed(cross_attn_cond)
@@ -194,9 +197,9 @@ class DIT(nn.Module):
         return output
 
     def forward(
-        self, 
-        x, 
-        t, 
+        self,
+        x,
+        t,
         cross_attn_cond=None,
         cross_attn_cond_mask=None,
         negative_cross_attn_cond=None,
@@ -212,7 +215,8 @@ class DIT(nn.Module):
         scale_phi=0.0,
         mask=None,
         return_info=False,
-        **kwargs):
+        **kwargs
+    ):
 
         assert causal == False, "Causal mode is not supported for DiffusionTransformer"
 

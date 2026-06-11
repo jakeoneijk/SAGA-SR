@@ -12,11 +12,11 @@ from torch import nn
 
 class Conditioner(nn.Module):
     def __init__(
-            self,
-            dim: int,
-            output_dim: int,
-            project_out: bool = False
-            ):
+        self,
+        dim: int,
+        output_dim: int,
+        project_out: bool = False
+    ):
         
         super().__init__()
 
@@ -31,11 +31,12 @@ class NumberConditioner(Conditioner):
     '''
         Conditioner that takes a list of floats, normalizes them for a given range, and returns a list of embeddings
     '''
-    def __init__(self, 
-                output_dim: int,
-                min_val: float=0,
-                max_val: float=1
-                ):
+    def __init__(
+        self,
+        output_dim: int,
+        min_val: float=0,
+        max_val: float=1
+    ):
         super().__init__(output_dim, output_dim)
 
         self.min_val = min_val
@@ -86,12 +87,12 @@ class T5Conditioner(Conditioner):
     }
 
     def __init__(
-            self,
-            output_dim: int,
-            t5_model_name: str = "t5-base",
-            max_length: str = 128,
-            enable_grad: bool = False,
-            project_out: bool = False
+        self,
+        output_dim: int,
+        t5_model_name: str = "t5-base",
+        max_length: str = 128,
+        enable_grad: bool = False,
+        project_out: bool = False
     ):
         assert t5_model_name in self.T5_MODELS, f"Unknown T5 model name: {t5_model_name}"
         super().__init__(self.T5_MODEL_DIMS[t5_model_name], output_dim, project_out=project_out)

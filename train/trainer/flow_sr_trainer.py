@@ -16,7 +16,7 @@ from util.util_audio_lowpass_filter import UtilAudioLowPassFilterNVSR
 
 class FlowSRTrainer(Trainer):
     def __init__(
-        self, 
+        self,
         segment_sec:float,
         sample_rate:int,
         mono:bool,

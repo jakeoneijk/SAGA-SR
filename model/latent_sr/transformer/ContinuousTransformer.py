@@ -19,7 +19,7 @@ class ContinuousTransformer(nn.Module):
         rotary_pos_emb=True,
         zero_init_branch_outputs=True,
         **kwargs
-        ):
+    ):
 
         super().__init__()
 

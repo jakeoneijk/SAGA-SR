@@ -5,15 +5,16 @@ from torch.nn.utils import weight_norm
 from .Util import get_activation
 
 class OobleckEncoder(nn.Module):
-    def __init__(self, 
-                 in_channels=2, 
-                 channels=128, 
-                 latent_dim=128, 
-                 c_mults = [1, 2, 4, 8, 16], 
-                 strides = [2, 4, 4, 8, 8],
-                 use_snake=True,
-                 antialias_activation=False
-        ):
+    def __init__(
+        self,
+        in_channels=2,
+        channels=128,
+        latent_dim=128,
+        c_mults = [1, 2, 4, 8, 16],
+        strides = [2, 4, 4, 8, 8],
+        use_snake=True,
+        antialias_activation=False
+    ):
         super().__init__()
           
         c_mults = [1] + c_mults
@@ -38,16 +39,18 @@ class OobleckEncoder(nn.Module):
         return self.layers(x)
 
 class OobleckDecoder(nn.Module):
-    def __init__(self, 
-                 out_channels=2, 
-                 channels=128, 
-                 latent_dim=64, 
-                 c_mults = [1, 2, 4, 8, 16], 
-                 strides = [2, 4, 4, 8, 8],
-                 use_snake=True,
-                 antialias_activation=False,
-                 use_nearest_upsample=False,
-                 final_tanh=False):
+    def __init__(
+        self,
+        out_channels=2,
+        channels=128,
+        latent_dim=64,
+        c_mults = [1, 2, 4, 8, 16],
+        strides = [2, 4, 4, 8, 8],
+        use_snake=True,
+        antialias_activation=False,
+        use_nearest_upsample=False,
+        final_tanh=False
+    ):
         super().__init__()
 
         c_mults = [1] + c_mults

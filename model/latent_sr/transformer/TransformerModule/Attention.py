@@ -83,12 +83,12 @@ class Attention(nn.Module):
         )
 
     def flash_attn(
-            self,
-            q, 
-            k, 
-            v,
-            mask = None,
-            causal = None
+        self,
+        q,
+        k,
+        v,
+        mask = None,
+        causal = None
     ):
         batch, heads, q_len, _, k_len, device = *q.shape, k.shape[-2], q.device
         kv_heads = k.shape[1]

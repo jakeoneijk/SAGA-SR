@@ -6,11 +6,13 @@ from torch_jaekwon.util import util_data, util_audio
 from util.util_audio_lowpass_filter import UtilAudioLowPassFilterNVSR
 
 class SRMetaDatasetEval(torch.utils.data.Dataset):
-    def __init__(self,
-                 root_data_dir:str = '/home/jakeoneijk/220101_data/audiosr/test/ResampleTo48k',
-                 sample_rate:int = 48000,
-                 mono:bool = False,
-                 segment_sec:float = 10) -> None:
+    def __init__(
+        self,
+        root_data_dir:str = '/home/jakeoneijk/220101_data/audiosr/test/ResampleTo48k',
+        sample_rate:int = 48000,
+        mono:bool = False,
+        segment_sec:float = 10
+    ) -> None:
         data_dir_list = [f'{root_data_dir}/{data_name}' for data_name in os.listdir(root_data_dir) if os.path.isdir(f'{root_data_dir}/{data_name}')]
         self.data_list = list()
         for data_dir in data_dir_list:

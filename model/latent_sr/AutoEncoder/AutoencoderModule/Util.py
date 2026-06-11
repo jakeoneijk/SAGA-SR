@@ -71,12 +71,14 @@ def snake_beta(x, alpha, beta):
 
 class Activation1d(nn.Module):
 
-    def __init__(self,
-                 activation,
-                 up_ratio: int = 2,
-                 down_ratio: int = 2,
-                 up_kernel_size: int = 12,
-                 down_kernel_size: int = 12):
+    def __init__(
+        self,
+        activation,
+        up_ratio: int = 2,
+        down_ratio: int = 2,
+        up_kernel_size: int = 12,
+        down_kernel_size: int = 12
+    ):
         super().__init__()
         self.up_ratio = up_ratio
         self.down_ratio = down_ratio
@@ -167,13 +169,15 @@ def kaiser_sinc_filter1d(cutoff, half_width, kernel_size):
 
 class LowPassFilter1d(nn.Module):
 
-    def __init__(self,
-                 cutoff=0.5,
-                 half_width=0.6,
-                 stride: int = 1,
-                 padding: bool = True,
-                 padding_mode: str = 'replicate',
-                 kernel_size: int = 12):
+    def __init__(
+        self,
+        cutoff=0.5,
+        half_width=0.6,
+        stride: int = 1,
+        padding: bool = True,
+        padding_mode: str = 'replicate',
+        kernel_size: int = 12
+    ):
         # kernel_size should be even number for stylegan3 setup,
         # in this implementation, odd number is also possible.
         super().__init__()
