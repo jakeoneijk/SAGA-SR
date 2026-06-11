@@ -1,0 +1,207 @@
+data:
+  config:
+    preprocessed_dir_path: &preprocessed_dir_path 'artifacts/data/preprocessed/audiosr'
+    data_config_name: &data_config_name 1d_vae_latent
+    text_tag: &text_tag '_text'
+    subset_name: &subset_name null
+    sample_rate: &sample_rate 44100
+    segment_sec: &segment_sec 5.94430839002 #5.94430839002 #47.55446712018141
+    mono: &mono False
+  train_data_path: &train_data_path /home/jakeoneijk/220101_data/audiosr/train/
+  test_data_path: &test_data_path '/home/jakeoneijk/220101_data/audiosr/test/ResampleTo48k'
+  train_data_name_list: &train_data_name_list
+    - 'Freesound48k'
+    - 'MedleyDB-V1'
+    - 'MedleyDB-V2'
+    - 'MoisesDB'
+    - 'MUSDB18-HQ'
+    - 'OpenSLR'
+  config_per_dataset_dict:
+    audiosr:
+      preprocessor_class_meta_list:
+      #- 'name': 'SRMetaDataPreprocessor'
+      #  'args':
+      #    train_data_path: *train_data_path
+      #    train_data_name_list: *train_data_name_list
+      #    sample_rate: *sample_rate
+      #    data_config_name: *data_config_name
+      #    segment_sec: *segment_sec
+      #    hop_sec: 5.0
+      #    length_sec_threshold: 1.5
+      #- name: SRStatPreprocessor
+      #  args:
+      #    meta_dir_path: *preprocessed_dir_path
+      #    train_data_name_list: *train_data_name_list
+      #    sample_rate: *sample_rate
+      #    data_config_name: *data_config_name
+      - 'name': ['sr_text_preprocessor', 'SRTextPreprocessor']
+        'args':
+          preprocessed_dir_path: *preprocessed_dir_path
+          data_config_name: *data_config_name
+          text_tag: *text_tag
+          subset_name: *subset_name
+      #- 'name': ['sr_text_test_preprocessor', 'SRTextTestPreprocessor']
+      #  'args':
+      #    preprocessed_dir_path: *preprocessed_dir_path
+      #    data_config_name: 'test'
+      #    text_tag: *text_tag
+      #    audio_data_dir_path: *test_data_path
+      #    segment_sec: *segment_sec
+#####################################################################################################
+dataloader:
+  train:
+    args:
+      batch_size: 256
+      num_workers: 4
+      pin_memory: True
+      drop_last: True
+    dataset_class_meta:
+      name: ['sr_meta_dataset', 'SRMetaDataset']
+      args:
+        meta_dir_path: *preprocessed_dir_path
+        data_name_list: *train_data_name_list
+        data_config_name: *data_config_name
+        subset_name: *subset_name
+        #input_cut_off_freq_range: [11025, 16000]
+        output_cut_off_freq_range: null
+        target_cutoff_ratio_threshold: null
+        sample_rate: *sample_rate 
+        segment_sec: *segment_sec  
+        mono: *mono
+        data_set_type_list: ['music','speech','general']
+        use_prompt: true
+    #collater_class_meta:
+    #  name: ['file_name', 'class_name']
+    #  args: {}
+  valid:
+    args:
+      batch_size: 4
+      num_workers: 4
+      shuffle: False
+      drop_last: True
+    dataset_class_meta:
+      name: ['SRMetaDatasetEval', 'SRMetaDatasetEval']
+      args: {'segment_sec': *segment_sec, sample_rate: *sample_rate, mono: *mono}
+  #test:
+  #  args:
+  #    batch_size: 16
+  #    num_workers: 4
+  #    shuffle: False
+  #    drop_last: True
+  #  dataset_class_meta:
+  #    name: ['file_name', 'class_name']
+  #    args: {}
+#####################################################################################################
+model:
+  class_meta:
+      name: ['latent_sr_text_flow', 'LatentSRTextFlow']
+      args:
+        unconditional_prob: 0.1
+        cfg_scale:
+          input_concat_cond: 1.4
+          cross_attn_cond: 1.2
+        #cfg_rescale: 0.7
+        timestep_sampler: 'logit_normal'
+        audio_seg_sec: *segment_sec
+        cross_attention_cond_name_list: ["prompt", "input_cutoff_ratio", "output_cutoff_ratio"] #"seconds_start", "seconds_total"
+        global_cond_name_list: ["input_cutoff_ratio", "output_cutoff_ratio"] #"seconds_start", "seconds_total"
+        conditioning_config: 
+          cond_dim: 768
+          configs:
+            - id: "prompt"
+              type: "t5"
+              config:
+                t5_model_name: "t5-base"
+                max_length: 128
+            - id: "input_cutoff_ratio"
+              type: "number"
+              config:
+                min_val: 0
+                max_val: 1
+            - id: "output_cutoff_ratio"
+              type: "number"
+              config:
+                min_val: 0
+                max_val: 1
+            #- id: "seconds_start"
+            #  type: "number"
+            #  config:
+            #    min_val: 0
+            #    max_val: 512
+            #- id: "seconds_total"
+            #  type: "number"
+            #  config:
+            #    min_val: 0
+            #    max_val: 512
+        model_class_meta:
+          name: ['dit', 'DIT']
+          args:
+            io_channels: 64
+            input_concat_dim: 64
+            embed_dim: 1536
+            depth: 24
+            num_heads: 24
+            cond_token_dim: 768
+            global_cond_dim: 1536
+            project_cond_tokens: false
+#####################################################################################################
+train:
+  class_meta: 
+    name : ['flow_sr_text_trainer', 'FlowSRTextTrainer']
+    args : 
+      #model_ckpt_path: 'artifacts/ckpt/stable_aufio_open/250615_model_for_sr.ckpt'
+      use_ema: False
+      segment_sec: *segment_sec
+      sample_rate: *sample_rate
+      mono: *mono
+      log_input_cutoff_freq: 4000
+      log_media_output_cutoff_ratio: 0.9
+
+  optimizer: 
+    class_meta: 
+      name : 'AdamW'
+      args:
+        lr: 1.0e-05 #2.5e-05
+        betas: [0.9, 0.999]
+        weight_decay: 1.0e-3
+
+  scheduler:
+    class_meta:
+      name: ["inverse_lr", "InverseLR"]
+      args:
+        inv_gamma: 1000000
+        power: 0.5
+        warmup: 0.99
+    interval: 'step' #epoch
+    frequency: 1
+
+  loss_control:
+    class_meta: { 'name' : 'LossControl', 'args' : {}}
+
+  loss_dict:
+    mel_l1_loss :
+      class_meta: { 'name' : 'L1Loss', 'args' : {}}
+      pred_name: ''
+      target_name: ''
+      weight: 1
+  
+  save_model_step_interval: 5000
+#####################################################################################################
+inference:
+  class_meta:
+    name: ['audio_sr_text_inferencer', 'AudioSrTextInferencer']
+    args: 
+      segment_sec: *segment_sec
+      text_dir_path: 
+        4000: 'artifacts/data/preprocessed/audiosr/test_text_4000/ResampleTo48k'
+        8000: 'artifacts/data/preprocessed/audiosr/test_text/ResampleTo48k'
+        12000: 'artifacts/data/preprocessed/audiosr/test_text/ResampleTo48k'
+#####################################################################################################
+evaluate:
+  eval_dir_path_gt: '/home/jakeoneijk/220101_data/audiosr/test/ResampleTo48k'
+  eval_dir_path_pred: 'artifacts/inference/250613_text_sr/250611_stable_audio_finetune(step20000)'
+  class_meta:
+    name: ['sr_evaluator', 'SREvaluator']
+    args: 
+      sample_rate: 44100
+      max_audio_sec: 5.12
